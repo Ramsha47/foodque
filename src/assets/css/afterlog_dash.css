@@ -1,0 +1,360 @@
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.tab {
+  margin: 0 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.active-tab {
+  background-color: #007bff;
+  color: white;
+}
+
+.user-profile {
+  padding: 20px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+}
+.profil-info:hover {
+  box-shadow: -3px 8px 18px 13px rgba(0, 0, 0, 0.1);
+  transform: scale(1.01);
+}
+.profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-img {
+  border-radius: 50%;
+
+  width: 150px;
+  height: 150px;
+}
+.table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+.table > :not(caption) > * > * {
+  padding: 1.5rem 1.5rem;
+
+  font-size: 1.5rem;
+
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.table tr:hover td {
+  background-color: #00843c; /* Darker shade for hover effect */
+  transform: scale(1.05); /* Slight zoom effect */
+  color: white;
+}
+.user-details p {
+  margin: 0.5em 0;
+}
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-details {
+    text-align: center;
+  }
+  /* .vertical-border {
+    display: none; 
+  } */
+}
+.user-details p {
+  margin: 5px 0;
+}
+
+.user-details p {
+  margin: 0.5em 0;
+}
+
+.user-details {
+  width: 60%;
+}
+.profile-image {
+  transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.1); /* Zoom effect */
+}
+.graph-shadow:hover {
+  box-shadow: -3px 8px 18px 13px rgba(0, 0, 0, 0.1);
+  transform: scale(1.01);
+}
+.tabs-shadow:hover {
+  box-shadow: -3px 8px 18px 13px rgba(0, 0, 0, 0.1);
+  transform: scale(1.01);
+}
+.meal-plans {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.meal-plans h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.diet-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.meal-plans-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.meal-plan-title td {
+  font-weight: bold;
+  background-color: #00843c;
+  color: white;
+  padding: 15px;
+  text-align: left;
+}
+.meal-plan-description {
+  padding: 15px;
+  font-style: italic;
+  color: #555;
+  text-align: left;
+}
+.meal-plans-table tbody tr {
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.meal-plans-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.meal-plans-table tbody tr:hover {
+  background-color: #e9ecef;
+  transform: scale(1.02);
+}
+
+.meal-type {
+  font-weight: bold;
+  padding: 15px;
+  color: #555;
+  text-align: left;
+}
+
+.meal-detail {
+  padding: 15px;
+  color: #333;
+  text-align: left;
+}
+.diet-table tbody tr {
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.diet-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.diet-table tbody tr:hover {
+  background-color: #e9ecef;
+  transform: scale(1.02);
+}
+
+.diet-title,
+.diet-description {
+  padding: 15px;
+}
+
+.diet-title {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.diet-description {
+  color: #555;
+}
+.diet-goals {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.diet-goals h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size:20px;
+}
+.diet-goal {
+  padding: 15px;
+  font-size: 1.2em;
+  color: #007bff;
+  text-align: left;
+}
+.diet-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.diet-goals-form {
+  display: flex;
+  flex-direction: column;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.meal-frequency-options {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.meal-frequency-option {
+  display: flex;
+  align-items: center;
+}
+
+.meal-frequency-option input {
+  margin-right: 5px;
+}
+
+.meal-frequency-option input[type="radio"]:checked + span {
+  color: blue; /* Change the color to blue */
+  font-weight: bold; /* Make the text bold */
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size:18px;
+}
+.submit-button:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .diet-goals {
+    width: 100%;
+  }
+}
+.user-preferences {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.user-preferences h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.preferences-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.preference-category td {
+  font-weight: bold;
+  background-color: #00843c;
+  color: white;
+  padding: 15px;
+  text-align: left;
+}
+.preferences-table tbody tr {
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.preferences-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.preferences-table tbody tr:hover {
+  background-color: #e9ecef;
+  transform: scale(1.02);
+}
+
+.preference-item {
+  padding: 15px;
+  font-size: 1.2em;
+  color: #555;
+  text-align: left;
+}
+.user-profile-form {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-profile-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+@media (max-width: 768px) {
+  .user-profile-form {
+    width: 100%;
+  }
+}
