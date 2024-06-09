@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";
-
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginSignUp.css";
 
@@ -15,86 +15,66 @@ const LoginSignUp = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  const [message, setMessage] = useState(null);
+
   const [user, setUser] = useState({
-    name: "",
-    email: "",
+    username: "",
+    useremail: "",
     password: "",
   });
-  const { name, email, password } = user;
+  const { username, useremail, password } = user;
 
-  // const loginSubmit = (e) => {
-  //   e.preventDefault();
-  //   navigate("/Dashboardlanding");
-  // };
   const loginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginEmail,
-          password: loginPassword,
-        }),
+      const response = await axios.post("http://127.0.0.1:8000/login/", {
+        useremail: loginEmail,
+        password: loginPassword,
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data.message); // For success message
-        navigate("/Dashboardlanding");
-      } else {
-        console.error(data.message); // For error message
+      if (response.status === 201) {
+        console.log(response.data.message); // For success message
+        setMessage({ type: 'error', text: response.data.message });
+        setTimeout(() => setMessage(null), 5000);
+        navigate("/dashboard/createprofile", { state: { message: response.data.message } });
+      } else if(response.status === 200) {
+        console.error(response.data.message); // For error message
+        setMessage({ type: 'error', text: response.data.message });
+        setTimeout(() => setMessage(null), 5000);
       }
     } catch (error) {
       console.error("Error:", error);
+      setMessage({ type: 'error', text: error.message });
+      setTimeout(() => setMessage(null), 5000);
     }
   };
 
   const registerSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("http://127.0.0.1:5000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: user.name,
-          email: user.email,
-          password: user.password,
-        }),
+      const response = await axios.post("http://127.0.0.1:8000/register/", {
+        username: user.username,
+        useremail: user.useremail,
+        password: user.password,
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data.message); // For success message
-        navigate("/login");
-      } else {
-        console.error(data.message); // For error message
+      if (response.status === 201) {
+        setMessage({ type: 'success', text: response.data.message });
+        setTimeout(() => setMessage(null), 5000);
+        clearFormData();
+        switchTabs(null, "login"); // Switch to login tab
+      } else if(response.status === 200) {
+        setMessage({ type: 'error', text: response.data.message });
+        setTimeout(() => setMessage(null), 5000);
       }
     } catch (error) {
-      console.error("Error:", error);
+      setMessage({ type: 'error', text: error.message });
+      setTimeout(() => setMessage(null), 5000);
     }
   };
 
   const registerDataChange = (e) => {
-    // if (e.target.name === "avatar") {
-    //   const reader = new FileReader();
-
-    //   reader.onload = () => {
-    //     if (reader.readyState === 2) {
-    //       setAvatarPreview(reader.result);
-    //       setAvatar(reader.result);
-    //     }
-    //   };
-
-    //       reader.readAsDataURL(e.target.files[0]);
-    //     } else {
     setUser({ ...user, [e.target.name]: e.target.value });
-    //     }
   };
 
   const switchTabs = (e, tab) => {
@@ -112,6 +92,14 @@ const LoginSignUp = () => {
       registerTab.current.classList.add("shiftToNeutralForm");
       loginTab.current.classList.add("shiftToLeft");
     }
+  };
+
+  const clearFormData = () => {
+    setUser({
+      username: "",
+      useremail: "",
+      password: "",
+    });
   };
 
   return (
@@ -161,8 +149,8 @@ const LoginSignUp = () => {
                 type="text"
                 placeholder="Name"
                 required
-                name="name"
-                value={name}
+                name="username"
+                value={username}
                 onChange={registerDataChange}
               />
             </div>
@@ -172,8 +160,8 @@ const LoginSignUp = () => {
                 type="email"
                 placeholder="Email"
                 required
-                name="email"
-                value={email}
+                name="useremail"
+                value={useremail}
                 onChange={registerDataChange}
               />
             </div>
@@ -191,6 +179,11 @@ const LoginSignUp = () => {
 
             <input type="submit" value="Register" className="signUpBtn" />
           </form>
+          {message && (
+            <div className={`message ${message.type}`}>
+              {message.text}
+            </div>
+          )}
         </div>
       </div>
     </React.Fragment>

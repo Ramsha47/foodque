@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../assets/css/afterlog_dash.css";
+import { useLocation } from "react-router-dom";
 
 const Createprofile = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,9 @@ const Createprofile = () => {
     exerciseLevel: "",
   });
 
+  const [message, setMessage] = useState(null); // State for the message
+  const location = useLocation();
+
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -21,8 +25,28 @@ const Createprofile = () => {
     // Submit data to your backend here
   };
 
+  useEffect(() => {
+    // Check if there's a message in the location state
+    const messageFromLocation = location.state && location.state.message;
+    if (messageFromLocation) {
+      // Set the message
+      setMessage(messageFromLocation);
+      // Set a timeout to clear the message after 5 seconds
+      const timeoutId = setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      // Clear the timeout when the component unmounts or when the message changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.state]);
+
   return (
     <div className="user-profile-form mt-5">
+      {message && (
+        <div className="alert alert-success" role="alert">
+          {message}
+        </div>
+      )}
       <h1>User Profile</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

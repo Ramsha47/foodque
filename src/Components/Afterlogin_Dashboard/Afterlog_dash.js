@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { Bar, Line } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faToggleOn, faToggleOff } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation } from "react-router-dom";
 
 import {
   Chart as ChartJS,
@@ -36,6 +37,8 @@ ChartJS.register(
 const UserProfile = () => {
   const [key, setKey] = useState("dietgoals");
   const [notificationsOn, setNotificationsOn] = useState(true); // State to manage notifications
+  const [message, setMessage] = useState(null); // State for the message
+  const location = useLocation();
 
   // Function to toggle notifications
   const toggleNotifications = () => {
@@ -159,8 +162,28 @@ const UserProfile = () => {
     },
   ];
 
+  useEffect(() => {
+    // Check if there's a message in the location state
+    const messageFromLocation = location.state && location.state.message;
+    if (messageFromLocation) {
+      // Set the message
+      setMessage(messageFromLocation);
+      // Set a timeout to clear the message after 5 seconds
+      const timeoutId = setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      // Clear the timeout when the component unmounts or when the message changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.state]);
+
   return (
     <div className="user-profile container-fluid mt-5">
+      {message && (
+        <div className="alert alert-success mt-5" role="alert">
+          {message}
+        </div>
+      )}
       <div className="d-flex align-items-center mt-5 profil-info vertical-border">
         <div className="user-info col-md-4 text-center">
           <img
@@ -324,248 +347,3 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-// import slider1 from "../../assets/images/slide1.jpeg";
-// import slider2 from "../../assets/images/slide2.jpeg";
-// import slider3 from "../../assets/images/slide3.png";
-// import slider4 from "../../assets/images/slide4.jpeg";
-// import slider5 from "../../assets/images/slide5.jpeg";
-
-// import image2 from "../../assets/images/saphetiti.png";
-// import image3 from "../../assets/images/shrimp_scampi.png";
-// const Afterlog_dash = () => {
-//   const sliderImages = [slider1, slider2, slider3, slider4, slider5];
-//   const [currentSlide, setCurrentSlide] = useState(0);
-//   const [selectedCategory, setSelectedCategory] = useState("all");
-//   const featuredFoodsdeitals = [
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://www.indianhealthyrecipes.com/wp-content/uploads/2015/10/pizza-recipe-1.jpg",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://www.foodandwine.com/thmb/DI29Houjc_ccAtFKly0BbVsusHc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/crispy-comte-cheesburgers-FT-RECIPE0921-6166c6552b7148e8a8561f7765ddf20b.jpg",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image:
-//         "https://images.immediate.co.uk/production/volatile/sites/30/2021/03/French-fries-b9e3e0c.jpg?resize=768,574",
-//       description: "Fresh sushi rolls",
-//     },
-//   ];
-//   const featuredFoods = [
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://www.indianhealthyrecipes.com/wp-content/uploads/2015/10/pizza-recipe-1.jpg",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEQ8d_yAysSTk1jJGcPyuPSOH4qU-kH9KNLQ&s",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://www.thespruceeats.com/thmb/lmDJraajDXMJ9izsIfzNt79GrSs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Pizzasupremehoriz-1ccfa0b1732b4c128427d19ae02a422b.jpg",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://img-global.cpcdn.com/recipes/3c83c44fb3c1d71c/1200x630cq70/photo.jpg",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiHE6DQd4IdwxHSnP44ZzkwekF9pTb9k8BQg&s",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Pizza",
-//       category: "pizza",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWaMtnw1hKn0EDgFHmgjdBxmCAMeIyKORqJA&s",
-//       description: "Delicious cheese pizza",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://www.foodandwine.com/thmb/DI29Houjc_ccAtFKly0BbVsusHc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/crispy-comte-cheesburgers-FT-RECIPE0921-6166c6552b7148e8a8561f7765ddf20b.jpg",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://img.freepik.com/free-photo/delicious-burger-with-many-ingredients-isolated-white-background-tasty-cheeseburger-splash-sauce_90220-1266.jpg?size=338&ext=jpg&ga=GA1.1.44546679.1717027200&semt=sph",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGVzY9OViR4XFf0JP7e70o5PxJ7Va1UbP4KA&s",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpo29xCpvN4Nsd-Kf6XGSe3SOlZJWL5Z0-FQ&s",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQVrO9FKarrAGq08vByBi6iEz-wLoEUi7c_g&s",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Burger",
-//       category: "burger",
-//       image:
-//         "https://thumbs.dreamstime.com/b/fresh-tasty-fast-food-burger-fries-cold-drink-refers-to-quick-convenient-obtain-prepare-serve-often-high-268576353.jpg",
-//       description: "Juicy beef burger",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image:
-//         "https://images.immediate.co.uk/production/volatile/sites/30/2021/03/French-fries-b9e3e0c.jpg?resize=768,574",
-//       description: "Fresh sushi rolls",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image:
-//         "https://www.budgetbytes.com/wp-content/uploads/2023/12/air-fryer-french-fries-horizontal-hero-web-ready-1.jpg",
-//       description: "Fresh sushi rolls",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuQEiqVAes7Q8cORM8HJf8mS9-2EqC26NxGQ&s",
-//       description: "Fresh sushi rolls",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image: "https://i.ytimg.com/vi/lHyo8gv9AdE/maxresdefault.jpg",
-//       description: "Fresh sushi rolls",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1nZ79NmpSXZJ7i_nlwraQmb-KKU1rN3Ca6Q&s",
-//       description: "Fresh sushi rolls",
-//     },
-//     {
-//       name: "Fries",
-//       category: "fries",
-//       image:
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrQCwraISRpTEIDSdshI6i1zhXWpAoke4piQ&s",
-//       description: "Fresh sushi rolls",
-//     },
-//   ];
-//   const handleCategoryClick = (category) => {
-//     setSelectedCategory(category);
-//     console.log(category);
-//   };
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       // Increment current slide index cyclically
-//       setCurrentSlide((prevSlide) =>
-//         prevSlide === sliderImages.length - 1 ? 0 : prevSlide + 1
-//       );
-//     }, 3000); // Change slide every 3 seconds
-
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   const filteredFoods =
-//     selectedCategory === "all"
-//       ? featuredFoods
-//       : featuredFoods.filter((food) => food.category === selectedCategory);
-//   return (
-//     <div>
-//       <header className="home-header">
-//         <h1>Welcome to Food Paradise</h1>
-//         <p>Discover the best foods from around the world</p>
-//       </header>
-//       <div className="slider">
-//         {sliderImages.map((img, index) => (
-//           <div
-//             key={index}
-//             className="slide"
-//             style={{
-//               transform: `translateX(${-currentSlide * 100}%)`, // Slide position based on currentSlide
-//             }}
-//           >
-//             <img
-//               src={img}
-//               alt={`Slide ${index + 1}`}
-//               className="slider-image"
-//             />
-//           </div>
-//         ))}
-//       </div>
-//       <section className="featured-foods">
-//         <div className="food-grid">
-//           {featuredFoodsdeitals.map((food, index) => (
-//             <div key={index} className="food-card">
-//               <img src={food.image} alt={food.name} />
-//               <h3>{food.name}</h3>
-//               <p>{food.description}</p>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-//       <nav className="nav-links">
-//         <a href="#all" onClick={() => handleCategoryClick("all")}>
-//           All
-//         </a>
-//         <a href="#burger" onClick={() => handleCategoryClick("burger")}>
-//           Burger
-//         </a>
-//         <a href="#pizza" onClick={() => handleCategoryClick("pizza")}>
-//           Pizza
-//         </a>
-//         <a href="#sushi" onClick={() => handleCategoryClick("fries")}>
-//           Fries
-//         </a>
-//       </nav>
-//       <section className="featured-foods">
-//         <div className="food-grid">
-//           {filteredFoods.map((food, index) => (
-//             <div key={index} className="food-card">
-//               <img src={food.image} alt={food.name} />
-//               <h3>{food.name}</h3>
-//               <p>{food.description}</p>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-//     </div>
-//   );
-// };
-// export default Afterlog_dash;
