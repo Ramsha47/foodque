@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faToggleOn, faToggleOff } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import authService from '../../services/authservices';
+
 
 import {
   Chart as ChartJS,
@@ -37,6 +40,7 @@ ChartJS.register(
 const UserProfile = () => {
   const [key, setKey] = useState("dietgoals");
   const [notificationsOn, setNotificationsOn] = useState(true); // State to manage notifications
+  const [userProfile, setUserProfile] = useState(null);
   const [message, setMessage] = useState(null); // State for the message
   const location = useLocation();
 
@@ -167,7 +171,7 @@ const UserProfile = () => {
     const messageFromLocation = location.state && location.state.message;
     if (messageFromLocation) {
       // Set the message
-      setMessage(messageFromLocation);
+      setMessage({ type: 'success', text: messageFromLocation });
       // Set a timeout to clear the message after 5 seconds
       const timeoutId = setTimeout(() => {
         setMessage(null);
@@ -177,11 +181,37 @@ const UserProfile = () => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userId = await authService.getCurrentUser();
+        console.log("userId: ",  userId);
+        const response = await axios.get(`http://127.0.0.1:8000/get-user-profile/?user_id=${userId}`);
+        
+        if (response.data.length > 0) {
+          console.log(response.data);
+          setUserProfile(response.data[0]); // Assuming the first element is the user profile
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  if (!userProfile) {
+    return <div>Loading...</div>;
+  }
+
+  const gender = userProfile.user_gender === "M" ? "Male" : userProfile.user_gender === "F" ? "Female" : "Other";
+  const exerciseLevel = userProfile.user_exercise_level === "L" ? "Low" : userProfile.user_exercise_level === "M" ? "Moderate" : userProfile.user_exercise_level === "H" ? "High" : "Unknown";
+
   return (
     <div className="user-profile container-fluid mt-5">
-      {message && (
-        <div className="alert alert-success mt-5" role="alert">
-          {message}
+     {message && (
+        <div className={`alert alert-${message.type}`} role="alert">
+          {message.text}
         </div>
       )}
       <div className="d-flex align-items-center mt-5 profil-info vertical-border">
@@ -199,10 +229,10 @@ const UserProfile = () => {
             <tbody>
               <tr>
                 <td>
-                  <strong>Gender:</strong> Male 
+                  <strong>Gender:</strong> {gender}
                 </td>
                 <td>
-                  <strong>Age:</strong> 25 years
+                  <strong>Age:</strong> {userProfile.user_age} years
                 </td>
                 <td>
                   <strong>Phone Number:</strong> 263 281 480
@@ -211,13 +241,13 @@ const UserProfile = () => {
 
               <tr>
                 <td>
-                  <strong>Height:</strong> 5.7 feet
+                  <strong>Height:</strong> {userProfile.user_height} feet
                 </td>
                 <td>
-                  <strong>weight:</strong> 65 kg
+                  <strong>weight:</strong> {userProfile.user_weight} kg
                 </td>
                 <td>
-                  <strong>Excercise</strong> Medium
+                  <strong>Excercise</strong> {exerciseLevel}
                 </td>
               </tr>
 

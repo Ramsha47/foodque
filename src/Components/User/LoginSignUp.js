@@ -5,6 +5,7 @@ import FaceIcon from "@mui/icons-material/Face";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginSignUp.css";
+import authService from '../../services/authservices';
 
 const LoginSignUp = () => {
   const navigate = useNavigate();
@@ -27,14 +28,11 @@ const LoginSignUp = () => {
   const loginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/login/", {
-        useremail: loginEmail,
-        password: loginPassword,
-      });
+      const response = await authService.login(loginEmail, loginPassword);
 
       if (response.status === 201) {
         console.log(response.data.message); // For success message
-        setMessage({ type: 'error', text: response.data.message });
+        setMessage({ type: 'success', text: response.data.message });
         setTimeout(() => setMessage(null), 5000);
         navigate("/dashboard/createprofile", { state: { message: response.data.message } });
       } else if(response.status === 200) {

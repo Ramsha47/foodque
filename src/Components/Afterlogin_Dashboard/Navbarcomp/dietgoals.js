@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../assets/css/afterlog_dash.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const DietGoals = ({ goals = [] }) => {
+
+  const [message, setMessage] = useState(null); // State for the message
+  const location = useLocation();
+  // const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     dietGoal: "",
     dietPreference: "Vegetarian",
@@ -23,8 +29,29 @@ const DietGoals = ({ goals = [] }) => {
     console.log("Form submitted:", formValues);
   };
 
+  useEffect(() => {
+    // Check if there's a message in the location state
+    const messageFromLocation = location.state && location.state.message;
+    if (messageFromLocation) {
+      // Set the message
+      setMessage({ type: 'success', text: messageFromLocation });
+      // Set a timeout to clear the message after 5 seconds
+      const timeoutId = setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      // Clear the timeout when the component unmounts or when the message changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.state]);
+
   return (
     <div className="diet-goals mt-5">
+    {message && (
+      <div className={`alert alert-${message.type}`} role="alert">
+        {message.text}
+      </div>
+    )}
+
       <h3>Diet Goals</h3>
       {goals.length > 0 ? (
         <table className="diet-table">
