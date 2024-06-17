@@ -185,8 +185,14 @@ const UserProfile = () => {
     const fetchUserProfile = async () => {
       try {
         const userId = await authService.getCurrentUser();
+        const accessToken = authService.getAccessToken();
+
         console.log("userId: ",  userId);
-        const response = await axios.get(`http://127.0.0.1:8000/get-user-profile/?user_id=${userId}`);
+        const response = await axios.get(`http://127.0.0.1:8000/get-user-profile/?user_id=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         
         if (response.data.length > 0) {
           console.log(response.data);

@@ -34,7 +34,7 @@ const LoginSignUp = () => {
         console.log(response.data.message); // For success message
         setMessage({ type: 'success', text: response.data.message });
         setTimeout(() => setMessage(null), 5000);
-        navigate("/dashboard/createprofile", { state: { message: response.data.message } });
+        navigate("/Dashboardlanding", { state: { message: response.data.message } });
       } else if(response.status === 200) {
         console.error(response.data.message); // For error message
         setMessage({ type: 'error', text: response.data.message });
